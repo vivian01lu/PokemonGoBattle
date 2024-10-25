@@ -62,24 +62,47 @@ public class Pokemon {
         this.generation = generation;
         this.legendary = legendary;
     }
-
-    @Override
-    public String toString() {
-        return "Pokemon{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", total=" + total +
-                ", hitPoints=" + hitPoints +
-                ", attack=" + attack +
-                ", defense=" + defense +
-                ", specialAttack=" + specialAttack +
-                ", specialDefense=" + specialDefense +
-                ", speed=" + speed +
-                ", generation=" + generation +
-                ", legendary=" + legendary +
-                '}';
+    //getter methods
+    public int getAttack(){
+        return this.attack;
+    }
+    public int getDefense(){
+        return this.defense;
+    }
+    public String getType() {
+        return this.type;
     }
 
+    public double getEffectivenessModifier(String attackerType, String defenderType) {
+        switch (attackerType) {
+            case "Fire":
+                if (defenderType.equals("Grass")) return 2.0;
+                if (defenderType.equals("Water")) return 0.5;
+                return 1.0;
+
+            case "Water":
+                if (defenderType.equals("Fire")) return 2.0;
+                if (defenderType.equals("Electric")) return 0.5;
+                return 1.0;
+
+            case "Grass":
+                if (defenderType.equals("Electric")) return 2.0;
+                if (defenderType.equals("Fire")) return 0.5;
+                return 1.0;
+
+            case "Electric":
+                if (defenderType.equals("Water")) return 2.0;
+                if (defenderType.equals("Grass")) return 0.5;
+                return 1.0;
+
+            default:
+                return 1.0;
+        }
+
+    }
+    public double calculateDamage(Pokemon attacker, Pokemon defender) {
+        double effectiveness =  getEffectivenessModifier(attacker.getType(), defender.getType());
+        return 50 * ((double)attacker.getAttack()/defender.getDefense());
+    }
 
 }

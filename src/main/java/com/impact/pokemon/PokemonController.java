@@ -23,9 +23,10 @@ public class PokemonController {
     public Map<String, Object> attack(String pokemonA, String pokemonB) throws IOException {
         logger.info("Requested pokemonA: {}, pokemonB: {}", pokemonA, pokemonB);
 
-        // This is just an example of how to read the file contents into a List. Change or refactor as needed
-        List<String> pokemon = Files.readAllLines(data.getFile().toPath());
+//        // This is just an example of how to read the file contents into a List. Change or refactor as needed
+//        List<String> pokemon = Files.readAllLines(data.getFile().toPath());
 
+        List<Pokemon> pokemonList = data.getAllPokemon();
         // This is just an example of a response that is hardcoded - Change or refactor as needed
         return Map.of(
                 "winner", "Bulbasaur",
