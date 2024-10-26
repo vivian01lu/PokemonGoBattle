@@ -1,19 +1,31 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
-    <link href="app.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-</head>
-<body>
-<div id="app" class="section is-size-2">
-    <p>{{ pokemonName }} wins</p>
-    <p>
-        <button v-on:click="battle()">Battle!</button>
-    </p>
-    <hr/>
-    <img class="sprite" v-bind:src="'https://img.pokemondb.net/sprites/home/normal/' + pokemonName.toLowerCase() + '.png'"/>
-</div>
-<script src="app.js"></script>
-</body>
+    <head>
+        <title>Professor Oak's Battle Arena</title>
+        <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+        <link href="app.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    </head>
+    <body>
+        <h1>Welcome to Professor Oak's Battle Arena</h1>
+        <div id="app" class="section is-size-2">
+            <div class="row">
+                <div class="column is-one-quarter" v-for="pokemon in pokemons" :key="pokemon.name">
+                    <div class="card">
+                        <img class="sprite" :src="'https://img.pokemondb.net/sprites/home/normal/' + pokemon.name.toLowerCase() + '.png'" alt="Pokemon sprite" />
+                        <p>{{ pokemon.name }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <p>{{ winnerMessage }}</p>
+                <button v-on:click="battle()">Battle!</button>
+            </p>
+            <hr/>
+
+        </div>
+
+        <script src="app.js"></script>
+    </body>
 </html>

@@ -19,7 +19,13 @@ public class PokemonController {
     @Resource
     private PokemonData data;
 
-    @GetMapping("attack")
+    @GetMapping("/all-pokemons")
+    public List<Pokemon> getAllPokemons() {
+        logger.info("Fetching all Pokémon data.");
+        return data.getAllPokemon();
+    }
+
+    @GetMapping("/attack")
     public Map<String, Object> attack(String pokemonAName, String pokemonBName) throws IOException {
         logger.info("Requested pokemonA: {}, pokemonB: {}", pokemonAName, pokemonBName);
 

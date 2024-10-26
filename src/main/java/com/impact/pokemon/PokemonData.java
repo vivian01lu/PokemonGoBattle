@@ -20,6 +20,7 @@ import java.util.List;
  */
 @Component
 public class PokemonData {
+
     private  List<Pokemon> pokemonList;
     private final File file;
 
