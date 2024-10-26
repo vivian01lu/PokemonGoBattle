@@ -32,8 +32,14 @@ public class PokemonData {
     public List<Pokemon> getAllPokemon() {
         return pokemonList;
     }
-    public File getFile() {
-        return file;
+    public Pokemon findByName(String name) {
+        //based on its name return this Pokemon object
+        for (Pokemon pokemon : pokemonList) {
+            if (pokemon.getName().equals(name)){
+                return pokemon;
+            }
+        }
+        return null;
     }
 
     private void verifyParsedData() {

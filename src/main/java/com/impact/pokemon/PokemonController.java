@@ -20,16 +20,56 @@ public class PokemonController {
     private PokemonData data;
 
     @GetMapping("attack")
-    public Map<String, Object> attack(String pokemonA, String pokemonB) throws IOException {
-        logger.info("Requested pokemonA: {}, pokemonB: {}", pokemonA, pokemonB);
+    public Map<String, Object> attack(String pokemonAName, String pokemonBName) throws IOException {
+        logger.info("Requested pokemonA: {}, pokemonB: {}", pokemonAName, pokemonBName);
 
-//        // This is just an example of how to read the file contents into a List. Change or refactor as needed
-//        List<String> pokemon = Files.readAllLines(data.getFile().toPath());
+        //get the corresponding Pokemons based on their names
+        Pokemon pokemonA = data.findByName(pokemonAName);
+        Pokemon pokemonB = data.findByName(pokemonBName);
 
-        List<Pokemon> pokemonList = data.getAllPokemon();
-        // This is just an example of a response that is hardcoded - Change or refactor as needed
-        return Map.of(
-                "winner", "Bulbasaur",
-                "hitPoints", 120);
+        if(pokemonA == null || pokemonB == null) {
+            logger.info("Pokemon not found");
+            return Map.of("Error", "Pokemon not found");
+        }
+
+        // Determine which Pokemon goes first based on Speed (or random if equal)
+        Pokemon first, second;
+        if (pokemonA.getSpeed() > pokemonB.getSpeed()) {
+            first = pokemonA;
+            second = pokemonB;
+        }else if (pokemonA.getSpeed() < pokemonB.getSpeed()) {
+            first = pokemonB;
+            second = pokemonA;
+        }else {
+            //random
+            first = (Math.random() < 0.5)?pokemonA:pokemonB;
+            second = (first == pokemonA)?pokemonB:pokemonA;
+        }
+
+        //begin battle
+        while (pokemonA.getHitPoints() > 0 && pokemonB.getHitPoints() > 0) {
+            // First attacks second
+            int damage = BattleUtils.calculateDamage(first, second);
+            second.setHitPoints(second.getHitPoints() - damage);
+
+            // Check if second is defeated
+            if (second.getHitPoints() <= 0) {
+               return Map.of(  "winner", first.getName(),  "remainingHitPoints", first.getHitPoints());
+            }
+            //or Pokemon Second attacks Pokemon First
+            damage = BattleUtils.calculateDamage(second, first);
+            first.setHitPoints(first.getHitPoints() - damage);
+
+            // Check if first is defeated
+            if (first.getHitPoints() <= 0) {
+                return Map.of(
+                        "winner", second.getName(),
+                        "remainingHitPoints", second.getHitPoints()
+                );
+            }
+
+        }
+        // Fallback
+        return Map.of("error", "Unexpected error in battle simulation.");
     }
 }

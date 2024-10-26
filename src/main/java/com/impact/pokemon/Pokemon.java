@@ -62,6 +62,7 @@ public class Pokemon {
         this.generation = generation;
         this.legendary = legendary;
     }
+
     //getter methods
     public int getAttack(){
         return this.attack;
@@ -72,37 +73,16 @@ public class Pokemon {
     public String getType() {
         return this.type;
     }
-
-    public double getEffectivenessModifier(String attackerType, String defenderType) {
-        switch (attackerType) {
-            case "Fire":
-                if (defenderType.equals("Grass")) return 2.0;
-                if (defenderType.equals("Water")) return 0.5;
-                return 1.0;
-
-            case "Water":
-                if (defenderType.equals("Fire")) return 2.0;
-                if (defenderType.equals("Electric")) return 0.5;
-                return 1.0;
-
-            case "Grass":
-                if (defenderType.equals("Electric")) return 2.0;
-                if (defenderType.equals("Fire")) return 0.5;
-                return 1.0;
-
-            case "Electric":
-                if (defenderType.equals("Water")) return 2.0;
-                if (defenderType.equals("Grass")) return 0.5;
-                return 1.0;
-
-            default:
-                return 1.0;
-        }
-
+    public String getName() {
+        return this.name;
     }
-    public double calculateDamage(Pokemon attacker, Pokemon defender) {
-        double effectiveness =  getEffectivenessModifier(attacker.getType(), defender.getType());
-        return 50 * ((double)attacker.getAttack()/defender.getDefense());
+    public int getHitPoints() {
+        return this.hitPoints;
     }
-
+    public int getSpeed() {
+        return this.speed;
+    }
+    public void setHitPoints(int hitPoints){
+        this.hitPoints = hitPoints;
+    }
 }
