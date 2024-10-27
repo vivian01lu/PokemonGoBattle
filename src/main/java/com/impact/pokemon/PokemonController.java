@@ -3,6 +3,8 @@ package com.impact.pokemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -25,8 +27,8 @@ public class PokemonController {
         return data.getAllPokemon();
     }
 
-    @GetMapping("/attack")
-    public Map<String, Object> attack(String pokemonAName, String pokemonBName) throws IOException {
+    @GetMapping("attack")
+    public Map<String, Object> attack(@RequestParam String pokemonAName, @RequestParam String pokemonBName) throws IOException {
         logger.info("Requested pokemonA: {}, pokemonB: {}", pokemonAName, pokemonBName);
 
         //get the corresponding Pokemons based on their names
@@ -56,7 +58,11 @@ public class PokemonController {
         while (pokemonA.getHitPoints() > 0 && pokemonB.getHitPoints() > 0) {
             // First attacks second
             int damage = BattleUtils.calculateDamage(first, second);
-            second.setHitPoints(second.getHitPoints() - damage);
+            if (second.getHitPoints() <= damage) {
+                second.setHitPoints(0); // Prevent negative hit points
+            } else {
+                second.setHitPoints(second.getHitPoints() - damage);
+            }
 
             // Check if second is defeated
             if (second.getHitPoints() <= 0) {
@@ -64,7 +70,11 @@ public class PokemonController {
             }
             //or Pokemon Second attacks Pokemon First
             damage = BattleUtils.calculateDamage(second, first);
-            first.setHitPoints(first.getHitPoints() - damage);
+            if (first.getHitPoints() <= damage) {
+                first.setHitPoints(0); // Prevent negative hit points
+            } else {
+                first.setHitPoints(first.getHitPoints() - damage);
+            }
 
             // Check if first is defeated
             if (first.getHitPoints() <= 0) {
@@ -76,6 +86,7 @@ public class PokemonController {
 
         }
         // Fallback
+
         return Map.of("error", "Unexpected error in battle simulation.");
     }
 }

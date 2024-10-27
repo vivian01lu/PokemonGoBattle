@@ -1,3 +1,36 @@
 .sprite {
   width: 20%;
 }
+.grid-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card img {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.card.is-selected {
+  border-color: #00d1b2;
+  background-color: #f0fdfa;
+  transform: scale(1.05);
+}
+.card p {
+  font-size: 0.9rem;        /* Slightly smaller font size */
+  color: #006400;           /* Dark green color */
+  font-weight: 600;         /* Semi-bold for emphasis */
+  margin-top: 8px;          /* Space between image and text */
+  text-transform: capitalize; /* Capitalizes first letter of each name */
+}
