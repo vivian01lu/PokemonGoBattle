@@ -73,9 +73,8 @@ public class PokemonData {
      * Parses Pokémon data from the specified CSV file.
      *
      * @param file The CSV file to parse.
-     * @throws IOException if an error occurs while reading the file.
      */
-    private void parsePokemonData(File file) throws IOException {
+    private void parsePokemonData(File file) {
         try (FileReader fileReader = new FileReader(file)) {
             // Create CsvToBeanBuilder passing the file reader as a parameter
             CsvToBean<Pokemon> csvToBean = new CsvToBeanBuilder<Pokemon>(fileReader)

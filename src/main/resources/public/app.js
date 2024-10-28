@@ -18,9 +18,13 @@ const app = Vue.createApp({
         async function fetchPokemons() {
             try {
                 const response = await fetch("/all-pokemons");
-                if (!response.ok) throw new Error('Failed to fetch Pokémon data');
-                const data = await response.json();
-                pokemons.value = data;
+                // Check if the response is OK
+                if (response.ok) {
+                    pokemons.value = await response.json();
+                } else {
+                    // Handle the error case without throwing an exception
+                    handleError("Failed to fetch battle result. Please try again later.");
+                }
             } catch (error) {
                 handleError("An error occurred while fetching Pokémon data: " + error.message);
             }
@@ -33,10 +37,14 @@ const app = Vue.createApp({
             if (selectedPokemons.value.length === 2) {
                 try {
                     const response = await fetch(`/attack?pokemonAName=${selectedPokemons.value[0]}&pokemonBName=${selectedPokemons.value[1]}`);
-                    if (!response.ok) throw new Error('Failed to fetch battle result');
-                    const data = await response.json();
-
-                    processBattleResult(data);
+                    // Check if the response is OK
+                    if (response.ok) {
+                        const data = await response.json();
+                        processBattleResult(data);
+                    } else {
+                        // Handle the error case without throwing an exception
+                        handleError("Failed to fetch battle result. Please try again later.");
+                    }
                 } catch (error) {
                     handleError("An error occurred while trying to fetch the battle result: " + error.message);
                 }
