@@ -1,86 +1,70 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Professor Oak's Battle Arena</title>
-        <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
-        <link href="app.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-    </head>
-    <body>
-        <div id="app" class="section is-size-2">
-            <div class="header-container">
-                <img src="./welcomePage.png" alt="Pokémon Logo" class="background-image" />
-                <h1 class="welcome-message">Welcome to Professor Oak's Battle Arena</h1>
-                <div class="row">
-                    <div class="column">
-                        <button v-on:click="battle()" :disabled="selectedPokemons.length !== 2" class="button is-primary">Battle!</button>
-                    </div>
-                    <div class="column">
-                        <button v-on:click="resetBattle()" class="button is-warning">New Round</button>
-                    </div>
-                </div>
+<head>
+    <title>Professor Oak's Battle Arena</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="app.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 
-                <!-- Counter for selected Pokémon -->
-                <p class="selected-counter">Selected: {{ selectedPokemons.length }}/2</p>
-                <div v-if="winnerMessage" class="winner-display">
-                    <h3>{{ winnerMessage }}</h3>
-                    <img v-if="winnerImage" :src="winnerImage" alt="Winning Pokémon" class="winner-image" />
-                </div>
+</head>
+<body>
+<div id="app" class="section">
 
+    <!-- Header and Welcome Message -->
+    <div class="header-container">
+        <img src="./welcomePage.png" alt="Pokémon Logo" class="background-image" />
+        <h1 class="welcome-message">Welcome to Professor Oak's Battle Arena</h1>
+    </div>
 
-            </div>
-
-            <hr/>
-<!--            all available pokemons-->
-            <div class="grid-container ">
-                <div
-                        class="card"
-                        v-for="pokemon in pokemons"
-                        :key="pokemon.name"
-                        :class="{ 'is-selected': selectedPokemons.includes(pokemon.name) }"
-                        @click="togglePokemonSelection(pokemon.name)">
-
-                    <div class="card-image">
-                        <figure class="image">
-                            <img
-                                    class="sprite"
-                                    :src="'https://img.pokemondb.net/sprites/home/normal/' + pokemon.name.toLowerCase() + '.png'"
-                                    alt="Pokemon sprite" />
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-                                <figure class="image is-48x48">
-                                    <img
-                                            class="sprite"
-                                            :src="'https://img.pokemondb.net/sprites/home/normal/' + pokemon.name.toLowerCase() + '.png'"
-                                            alt="Pokemon sprite" />
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <p class="title is-4"></p>
-                                <p class="subtitle is-6"> </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content">
-
-                        <br />
-
-                    </div>
-
-                    <p class="has-text-centered">{{ pokemon.name }}</p>
-                </div>
-            </div>
-
-
-
-
+    <!-- Arena Section -->
+    <div class="arena">
+        <div v-if="selectedPokemons[0]" class="pokemon-left">
+            <img :src="getPokemonImage(selectedPokemons[0])" alt="First Pokémon" />
         </div>
+        <div v-if="selectedPokemons[1]" class="pokemon-right">
+            <img :src="getPokemonImage(selectedPokemons[1])" alt="Second Pokémon" />
+        </div>
+    </div>
 
-        <script src="app.js"></script>
-    </body>
+    <!-- Battle Buttons -->
+    <div class="button-container has-text-centered">
+        <button v-on:click="battle()" :disabled="selectedPokemons.length !== 2" class="button is-primary">Battle!</button>
+    </div>
+
+    <!-- Counter for selected Pokémon -->
+    <p class="is-size-5 has-text-centered">Selected: {{ selectedPokemons.length }}/2</p>
+
+    <!-- Winner Display -->
+    <div v-if="winnerMessage" class="winner-display">
+        <h3>{{ winnerMessage }}</h3>
+        <img v-if="winnerImage" :src="winnerImage" alt="Winning Pokémon" class="winner-image" />
+    </div>
+
+    <hr>
+
+    <!-- Pokémon Grid -->
+    <div class="grid-container">
+        <div class="card" v-for="pokemon in pokemons" :key="pokemon.name" :class="{ 'is-selected': selectedPokemons.includes(pokemon.name) }" @click="togglePokemonSelection(pokemon.name)">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img :src="getPokemonImage(pokemon.name)" alt="Pokemon sprite" />
+                </figure>
+            </div>
+            <div class="card-content">
+                <h2 class="title is-5">{{ pokemon.name }}</h2>
+                <p class="subtitle is-6">{{ pokemon.type }}</p>
+                <div class="stats">
+                    <p><strong>HitPoints:</strong> {{ pokemon.hitPoints }}</p>
+                    <p><strong>Attack:</strong> {{ pokemon.attack }}</p>
+                    <p><strong>Defense:</strong> {{ pokemon.defense }}</p>
+                    <p><strong>Speed:</strong> {{ pokemon.speed }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
 </html>
-
-

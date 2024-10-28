@@ -1,45 +1,62 @@
-.sprite {
-  width: 20%;
-}
-
-/* Container for image and welcome text */
 .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
   padding: 20px;
 }
 
-/* Full-width background image */
 .background-image {
   width: 100%;
   height: auto;
-  object-fit: cover;
-  margin-bottom: 20px; /* Space between the image and the welcome text */
 }
 
-/* Styling for welcome message */
 .welcome-message {
   font-size: 2.5rem;
-  color: #FFD700; /* Gold color for emphasis */
+  color: #535332;
   margin-top: 10px;
+
 }
 
-/* Center and style the winner display */
-.winner-display {
-  text-align: center;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border: 2px solid #00d1b2;
-  border-radius: 10px;
-  margin-top: 20px;
+.arena {
+  background-image: url('./pokemonBall.png');
+  background-size: contain; /* Ensures the whole image fits within the container */
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 200px; /* Adjust width to make the arena smaller */
+  height: 200px; /* Adjust height to make the arena smaller */
+  /*display: flex;*/
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Makes the arena circular */
+  margin: 0 auto; /* Centers the arena on the page */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Adds a subtle shadow for effect */
+}
+.pokemon-left,
+.pokemon-right {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  transition: transform 0.3s;
+}
+
+.pokemon-left {
+  left: 180px;
+  transform: translateX(-50%);
+}
+
+.pokemon-right {
+  right: 180px;
+  transform: translateX(50%);
+}
+
+.pokemon-left img,
+.pokemon-right img {
+  width: 100%;
+  height: auto;
 }
 
 .grid-container {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   padding: 20px;
 }
 
@@ -51,21 +68,112 @@
   transition: transform 0.2s;
 }
 
-.card img {
-  max-width: 100px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
 .card.is-selected {
   border-color: #00d1b2;
   background-color: #f0fdfa;
   transform: scale(1.05);
 }
-.card p {
-  font-size: 0.9rem;        /* Slightly smaller font size */
-  color: #006400;           /* Dark green color */
-  font-weight: 600;         /* Semi-bold for emphasis */
-  margin-top: 8px;          /* Space between image and text */
-  text-transform: capitalize; /* Capitalizes first letter of each name */
+
+.stats {
+  font-size: 0.9rem;
+  color: #333;
+  text-align: left;
+}
+
+/* Center the buttons on the page */
+.button-container {
+  display: flex;
+  gap: 20px; /* Space between buttons */
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  margin-top: 20px;
+}
+.winner-display {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 2px solid #00d1b2;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+
+/* General Styles */
+body {
+  background-color: #f0f0f5;
+}
+.header-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.welcome-message {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin-top: 1.5rem;
+}
+.background-image {
+  max-width: 100%;
+  height: auto;
+}
+.arena {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fefefe;
+}
+.pokemon-left, .pokemon-right {
+  width: 150px;
+  height: 150px;
+  margin: 0 2rem;
+}
+.button-container {
+  margin-top: 2rem;
+}
+.winner-display {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #dff0d8;
+  border-radius: 8px;
+}
+.winner-image {
+  width: 150px;
+  height: auto;
+  margin-top: 1rem;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card.is-selected {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+.card:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.03);
+}
+.card-content {
+  padding: 1rem;
+  text-align: center;
+}
+.stats p {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
 }

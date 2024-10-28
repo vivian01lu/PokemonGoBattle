@@ -1,48 +1,62 @@
 package com.impact.pokemon;
 
-import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
 /**
- * !! Feel free to change everything about this !!
- * This could be a class to hold all the Pokemon objects loaded from CSV,
- * but there are many ways to do it.
+ * Class responsible for loading Pokémon data from a CSV file and providing access to the Pokémon objects.
  */
 @Component
 public class PokemonData {
 
-    private  List<Pokemon> pokemonList;
-    private final File file;
+    private List<Pokemon> pokemonList; // List to hold all Pokémon objects
 
+    /**
+     * Constructor that initializes the PokemonData instance by loading and parsing the CSV file.
+     *
+     * @throws IOException if the CSV file cannot be found or read.
+     */
     public PokemonData() throws IOException {
-        file = new ClassPathResource("data/pokemon.csv").getFile();
+        // File object representing the CSV file
+        File file = new ClassPathResource("data/pokemon.csv").getFile();
         parsePokemonData(file);
-        // Verify if parsing was successful
-        verifyParsedData();
+        verifyParsedData(); // Verify if parsing was successful
     }
+
+    /**
+     * Retrieves the list of all Pokémon.
+     *
+     * @return List of Pokémon objects.
+     */
     public List<Pokemon> getAllPokemon() {
         return pokemonList;
     }
+
+    /**
+     * Finds a Pokémon by its name.
+     *
+     * @param name The name of the Pokémon to search for.
+     * @return The corresponding Pokémon object, or null if not found.
+     */
     public Pokemon findByName(String name) {
-        //based on its name return this Pokemon object
         for (Pokemon pokemon : pokemonList) {
-            if (pokemon.getName().equals(name)){
-                return pokemon;
+            if (pokemon.getName().equalsIgnoreCase(name)) {
+                return pokemon; // Return the Pokémon if the name matches
             }
         }
-        return null;
+        return null; // Return null if no match is found
     }
 
+    /**
+     * Verifies that the Pokémon data was parsed correctly.
+     */
     private void verifyParsedData() {
         if (pokemonList == null || pokemonList.isEmpty()) {
             System.err.println("No data was parsed. Please check the CSV file.");
@@ -50,31 +64,30 @@ public class PokemonData {
             System.out.println("Successfully parsed " + pokemonList.size() + " Pokémon.");
             // Print a few sample records to verify
             for (int i = 0; i < Math.min(5, pokemonList.size()); i++) {
-                System.out.println(pokemonList.get(i).toString());
+                System.out.println(pokemonList.get(i));
             }
         }
     }
-    private void parsePokemonData(File file) throws IOException{
 
-        try{
-            // create CsvToBeanBuilder passing - file reader as a parameter
-            CsvToBean<Pokemon> csvToBean = new CsvToBeanBuilder<Pokemon>(new FileReader(file))
+    /**
+     * Parses Pokémon data from the specified CSV file.
+     *
+     * @param file The CSV file to parse.
+     * @throws IOException if an error occurs while reading the file.
+     */
+    private void parsePokemonData(File file) throws IOException {
+        try (FileReader fileReader = new FileReader(file)) {
+            // Create CsvToBeanBuilder passing the file reader as a parameter
+            CsvToBean<Pokemon> csvToBean = new CsvToBeanBuilder<Pokemon>(fileReader)
                     .withType(Pokemon.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
-            pokemonList = csvToBean.parse();
-
-        } catch (FileNotFoundException e) {
-            System.err.println("The specified file was not found: " + e.getMessage());
+            pokemonList = csvToBean.parse(); // Parse the CSV data
+        } catch (IOException e) {
+            System.err.println("An error occurred while reading the CSV file: " + e.getMessage());
         } catch (IllegalStateException e) {
             System.err.println("An error occurred while processing CSV data: " + e.getMessage());
         }
-
     }
-
-
-
-
 }
-

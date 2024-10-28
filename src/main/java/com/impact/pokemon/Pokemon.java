@@ -2,6 +2,9 @@ package com.impact.pokemon;
 
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * Represents a Pokémon with various attributes that can be populated from a CSV file.
+ */
 public class Pokemon {
 
     @CsvBindByName(column = "#")
@@ -40,49 +43,57 @@ public class Pokemon {
     @CsvBindByName(column = "Legendary")
     private boolean legendary;
 
-    // Constructors, Getters, and Setters
-
-    public Pokemon() {
+    // Getter methods
+    public int getId() {
+        return id;
     }
 
-    // Add constructor to initialize all fields (if needed)
-    public Pokemon(int id, String name, String type, int total, int hitPoints, int attack,
-                   int defense, int specialAttack, int specialDefense, int speed,
-                   int generation, boolean legendary) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.total = total;
-        this.hitPoints = hitPoints;
-        this.attack = attack;
-        this.defense = defense;
-        this.specialAttack = specialAttack;
-        this.specialDefense = specialDefense;
-        this.speed = speed;
-        this.generation = generation;
-        this.legendary = legendary;
-    }
-
-    //getter methods
-    public int getAttack(){
-        return this.attack;
-    }
-    public int getDefense(){
-        return this.defense;
-    }
-    public String getType() {
-        return this.type;
-    }
     public String getName() {
-        return this.name;
+        return name;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
     public int getHitPoints() {
-        return this.hitPoints;
+        return hitPoints;
     }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getSpecialAttack() {
+        return specialAttack;
+    }
+
+    public int getSpecialDefense() {
+        return specialDefense;
+    }
+
     public int getSpeed() {
-        return this.speed;
+        return speed;
     }
-    public void setHitPoints(int hitPoints){
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public boolean isLegendary() {
+        return legendary;
+    }
+
+    // Setter methods
+    public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
     }
 }
