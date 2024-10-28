@@ -1,32 +1,35 @@
+
 const app = Vue.createApp({
     setup() {
         // let pokemonName = Vue.ref('________');
         let pokemons = Vue.ref([]);
         const selectedPokemons = Vue.ref([]);
+        let winnerImage = Vue.ref("");
         const winnerMessage = Vue.ref("");
+
 
         function battle() {
             if (selectedPokemons.value.length === 2) {
                 fetch(`/attack?pokemonAName=${selectedPokemons.value[0]}&pokemonBName=${selectedPokemons.value[1]}`)
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Server responded with status ${response.status}`);
-                        }
                         return response.json();
                     })
                     .then(data => {
                         if (data.winner) {
                             winnerMessage.value = `${data.winner} wins with ${data.remainingHitPoints} hit points left!`;
+                            winnerImage.value = `https://img.pokemondb.net/sprites/home/normal/${data.winner.toLowerCase()}.png`;
                         } else {
                             winnerMessage.value = "An error occurred: " + (data.error || "unknown error");
+                            winnerImage.value = ""; // Clear image if there’s an error
                         }
                     })
                     .catch(error => {
-                        console.error("Fetch error:", error);
                         winnerMessage.value = "An error occurred while trying to fetch the battle result.";
+                        winnerImage.value = "";
                     });
             } else {
                 winnerMessage.value = "Please select two Pokémon to battle!";
+                winnerImage.value = "";
             }
         }
         //use fetch() to get data from the backend database
@@ -55,12 +58,21 @@ const app = Vue.createApp({
             }
         }
 
+        function resetBattle() {
+            selectedPokemons.value = []; // Clear selected Pokémons
+            winnerMessage.value = ""; // Clear winner message
+            winnerImage.value = ""; // Clear winner image
+
+        }
+
 
         fetchPokemons();
 
         return {
             pokemons,
+            resetBattle,
             selectedPokemons,
+            winnerImage,
             winnerMessage,
             togglePokemonSelection,
             battle,

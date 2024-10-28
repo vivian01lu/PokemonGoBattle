@@ -1,6 +1,41 @@
 .sprite {
   width: 20%;
 }
+
+/* Container for image and welcome text */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Full-width background image */
+.background-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 20px; /* Space between the image and the welcome text */
+}
+
+/* Styling for welcome message */
+.welcome-message {
+  font-size: 2.5rem;
+  color: #FFD700; /* Gold color for emphasis */
+  margin-top: 10px;
+}
+
+/* Center and style the winner display */
+.winner-display {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 2px solid #00d1b2;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
 .grid-container {
   display: grid;
   gap: 20px;
