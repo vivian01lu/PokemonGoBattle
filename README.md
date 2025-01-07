@@ -27,10 +27,10 @@ This project simulates a Pokémon battle to determine which Pokémon would emerg
 - Displays the winning Pokémon, including its image
 
 ### Tasks
-- Create Pokémon classes to represent all fields in the CSV file.
-- Build the /attack API endpoint in Java (Spring Boot).
-- Design an interactive frontend using Vue.js for Professor Oak to choose Pokémon.
-- Write unit tests to ensure the correctness of each component.
+1. Create Pokémon classes to represent all fields in the CSV file.
+2. Build the /attack API endpoint in Java (Spring Boot).
+3. Design an interactive frontend using Vue.js for Professor Oak to choose Pokémon.
+4. Write unit tests to ensure the correctness of each component.
 ### How to Run the Project
 - Load the Pokémon data when the application starts (in-memory data storage).
 - Use the provided Gradle wrapper to build and run the project:
@@ -41,6 +41,6 @@ This project simulates a Pokémon battle to determine which Pokémon would emerg
     Once you see a message like Started SpringPokemonApplication..., open your browser at http://localhost:8080.
 - To run unit tests:
   ```
-    ./gradlew test '''
+    ./gradlew test
   ```
 
